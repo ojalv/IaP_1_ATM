@@ -3,7 +3,13 @@ let saldo = 500;
 let nombreUsuario = "Pepe";
 let retiro = 50;
 //Proceso
-if (saldo > retiro) {
+if (saldo < 0) {
+  console.log(
+    `ERROR: saldo invalido, el saldo no puede ser un numero negativo`
+  );
+} else if (isNaN(saldo)) {
+  console.log(`ERROR: saldo invalido, el saldo no es un numero`);
+} else if (saldo > retiro) {
   saldo = saldo - retiro;
 
   //Salida
