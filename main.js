@@ -1,7 +1,7 @@
 //Entrada
 let saldo = 500;
 let nombreUsuario = "Pepe";
-let retiro = 50;
+let retiro = prompt("Ingrese el monto de su extraccion");
 //Proceso
 if (saldo < 0 || retiro < 0) {
   console.log(`ERROR: monto negativo`);
