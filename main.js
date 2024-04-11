@@ -19,7 +19,7 @@ function validarRetiro(retiro) {
       );
     }
   }
-  return retiro;
+  return parseFloat(retiro);
 }
 
 //Entrada
