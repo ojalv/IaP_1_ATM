@@ -9,9 +9,8 @@ if (saldo < 0 || retiro < 0) {
   console.log(`ERROR: NaN`);
   //Salida
 } else if (saldo < retiro) {
-  console.log(`saldo insuficiente para realizar el retiro`);
+  alert(`saldo insuficiente para realizar el retiro`);
 } else if (saldo > retiro) {
   saldo = saldo - retiro;
-  console.log(`retiro: $${retiro}`);
-  console.log(`saldo: $${saldo}`);
+  alert(`retiro: $${retiro}\nsaldo: $${saldo}`);
 }
