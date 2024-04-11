@@ -22,6 +22,20 @@ function validarRetiro(retiro) {
   return parseFloat(retiro);
 }
 
+function hacerRetiro(saldo, retiro) {
+  if (saldo < retiro) {
+    alert(
+      `Extraccion incompleta\nUsted no posee saldo suficiente para realizar el retiro de $${retiro} de su cuenta\nUsted tiene $${saldo} disponibles en su cuenta`
+    );
+  } else if (saldo >= retiro) {
+    saldo = saldo - retiro;
+    alert(
+      `Extraccion exitosa!\nUsted acaba de retirar $${retiro} de su cuenta\nLe quedan $${saldo} disponibles en su cuenta para seguir operando`
+    );
+  }
+  return saldo;
+}
+
 //Entrada
 let saldo = 500;
 let nombreUsuario = "Pepe";
@@ -31,13 +45,5 @@ let retiro;
 retiro = validarRetiro(retiro);
 
 //Salida
-if (saldo < retiro) {
-  alert(
-    `Extraccion incompleta\nUsted no posee saldo suficiente para realizar el retiro de $${retiro} de su cuenta\nUsted tiene $${saldo} disponibles en su cuenta`
-  );
-} else if (saldo >= retiro) {
-  saldo = saldo - retiro;
-  alert(
-    `Extraccion exitosa!\nUsted acaba de retirar $${retiro} de su cuenta\nLe quedan $${saldo} disponibles en su cuenta para seguir operando`
-  );
-}
+
+saldo = hacerRetiro(saldo, retiro);
