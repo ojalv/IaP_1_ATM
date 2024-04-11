@@ -16,8 +16,12 @@ while (retiro == undefined || retiro <= 0 || isNaN(retiro) || retiro == "") {
 }
 //Salida
 if (saldo < retiro) {
-  alert(`saldo insuficiente para realizar el retiro`);
+  alert(
+    `Extraccion incompleta\nUsted no posee saldo suficiente para realizar el retiro de $${retiro} de su cuenta\nUsted tiene $${saldo} disponibles en su cuenta`
+  );
 } else if (saldo >= retiro) {
   saldo = saldo - retiro;
-  alert(`retiro: $${retiro}\nsaldo: $${saldo}`);
+  alert(
+    `Extraccion exitosa!\nUsted acaba de retirar $${retiro} de su cuenta\nLe quedan $${saldo} disponibles en su cuenta para seguir operando`
+  );
 }
