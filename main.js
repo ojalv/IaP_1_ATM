@@ -1,5 +1,5 @@
-function validarMontoRetiro(retiro) {
-  //Esta funcion valida que el dato ingresado sea un numero, en caso contrario le informa al usuario el tipo de error
+function validarRetiro(retiro) {
+  //Esta funcion valida que el dato ingresado sea un numero positivo, en caso contrario le informa al usuario el tipo de error
   while (retiro == undefined || retiro <= 0 || isNaN(retiro) || retiro == "") {
     retiro = prompt("Ingrese el monto de su extraccion");
     if (saldo < 0 || retiro < 0) {
@@ -28,7 +28,7 @@ let nombreUsuario = "Pepe";
 let retiro;
 
 //Proceso
-retiro = validarMontoRetiro(retiro);
+retiro = validarRetiro(retiro);
 
 //Salida
 if (saldo < retiro) {
