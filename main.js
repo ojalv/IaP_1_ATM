@@ -1,7 +1,11 @@
 //Entrada
 let saldo = 500;
 let nombreUsuario = "Pepe";
-let retiro = prompt("Ingrese el monto de su extraccion");
+let retiro;
+
+while (retiro == undefined || retiro <= 0 || isNaN(retiro) || retiro == "") {
+  retiro = prompt("Ingrese el monto de su extraccion");
+}
 //Proceso
 if (saldo < 0 || retiro < 0) {
   alert(`ERROR: monto negativo`);
