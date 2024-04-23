@@ -42,9 +42,14 @@ function hacerRetiro(saldo, retiro) {
 }
 
 function menuOpciones(nombreUsuario, seleccion) {
-  console.log("menu de opciones");
-  while (seleccion == undefined) {
-    console.log(`inicio while ${seleccion}`);
+  while (
+    seleccion == undefined ||
+    (seleccion != 1 &&
+      seleccion != 2 &&
+      seleccion != 3 &&
+      seleccion != 4 &&
+      seleccion != 5)
+  ) {
     seleccion = parseFloat(
       prompt(
         `Hola ${nombreUsuario}! Bienvenido a Atm Fake App
@@ -66,6 +71,14 @@ function atmApp(saldo, nombreUsuario, retiro) {
   seleccion = menuOpciones(nombreUsuario, seleccion);
   if (seleccion == 1) {
     retiro = validarRetiro(nombreUsuario, retiro);
+  } else if (seleccion == 2) {
+    alert("seleccion 2");
+  } else if (seleccion == 3) {
+    alert("seleccion 3");
+  } else if (seleccion == 4) {
+    alert("seleccion 4");
+  } else if (seleccion == 5) {
+    alert("seleccion 5");
   }
 
   //Salida
