@@ -132,17 +132,16 @@ function atmApp(saldo, nombreUsuario, retiro = undefined, ingreso = undefined) {
       if (seleccion == 2) {
         salir = true;
       }
-      seleccion = undefined // Reseteo de variable asociada
+      seleccion = undefined; // Reseteo de variable asociada
     } else if (seleccion == 3) {
       // ver balance de la cuenta
       alert(`Balance
-      Cuenta ${nombreUsuario}: $${saldo}`)
-      seleccion = undefined
-
+      Cuenta ${nombreUsuario}: $${saldo}`);
+      seleccion = undefined;
     } else if (seleccion == 4) {
-      alert("seleccion 4");
+      alert("Historial de operaciones");
     } else if (seleccion == 5) {
-      alert("seleccion 5");
+      salir = true;
     }
     retiro = undefined; // Reseteo de variable asociada
     ingreso = undefined; // Reseteo de variable asociada
