@@ -71,6 +71,9 @@ function atmApp(saldo, nombreUsuario, retiro) {
   seleccion = menuOpciones(nombreUsuario, seleccion);
   if (seleccion == 1) {
     retiro = validarRetiro(nombreUsuario, retiro);
+    //Salida
+    saldo = hacerRetiro(saldo, retiro);
+    
   } else if (seleccion == 2) {
     alert("seleccion 2");
   } else if (seleccion == 3) {
@@ -80,9 +83,6 @@ function atmApp(saldo, nombreUsuario, retiro) {
   } else if (seleccion == 5) {
     alert("seleccion 5");
   }
-
-  //Salida
-  saldo = hacerRetiro(saldo, retiro);
 }
 
 //Entrada
