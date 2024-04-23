@@ -41,10 +41,33 @@ function hacerRetiro(saldo, retiro) {
   return saldo;
 }
 
+function menuOpciones(nombreUsuario, seleccion) {
+  console.log("menu de opciones");
+  while (seleccion == undefined) {
+    console.log(`inicio while ${seleccion}`);
+    seleccion = parseFloat(
+      prompt(
+        `Hola ${nombreUsuario}! Bienvenido a Atm Fake App
+        1. hacer extraccion de dinero
+        2. hacer ingreso de dinero
+        3. ver balance de la cuenta
+        4. ver movimientos
+        5. salir`
+      )
+    );
+  }
+  return seleccion;
+}
+
 function atmApp(saldo, nombreUsuario, retiro) {
+  let seleccion;
   //Proceso
-  retiro = validarRetiro(nombreUsuario,retiro);
-  
+
+  seleccion = menuOpciones(nombreUsuario, seleccion);
+  if (seleccion == 1) {
+    retiro = validarRetiro(nombreUsuario, retiro);
+  }
+
   //Salida
   saldo = hacerRetiro(saldo, retiro);
 }
@@ -53,6 +76,5 @@ function atmApp(saldo, nombreUsuario, retiro) {
 let saldo = 500;
 let nombreUsuario = "Pepe";
 let retiro;
-
 
 atmApp(saldo, nombreUsuario, retiro);
