@@ -1,4 +1,4 @@
-function validarRetiro(retiro) {
+function validarRetiro(nombreUsuario, retiro) {
   //Esta funcion valida que el dato ingresado sea un numero positivo, en caso contrario le informa al usuario el tipo de error
   while (retiro == undefined || retiro <= 0 || isNaN(retiro) || retiro == "") {
     retiro = prompt("Ingrese el monto de su extraccion");
@@ -41,14 +41,18 @@ function hacerRetiro(saldo, retiro) {
   return saldo;
 }
 
+function atmApp(saldo, nombreUsuario, retiro) {
+  //Proceso
+  retiro = validarRetiro(nombreUsuario,retiro);
+  
+  //Salida
+  saldo = hacerRetiro(saldo, retiro);
+}
+
 //Entrada
 let saldo = 500;
 let nombreUsuario = "Pepe";
 let retiro;
 
-//Proceso
-retiro = validarRetiro(retiro);
 
-//Salida
-
-saldo = hacerRetiro(saldo, retiro);
+atmApp(saldo, nombreUsuario, retiro);
