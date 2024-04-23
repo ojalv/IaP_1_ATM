@@ -1,7 +1,11 @@
 function validarOperacion(nombreUsuario, monto, tipo = "retiro") {
   //Esta funcion valida que el dato ingresado sea un numero positivo, en caso contrario le informa al usuario el tipo de error
   while (monto == undefined || monto <= 0 || isNaN(monto) || monto == "") {
-    monto = prompt("Ingrese el monto de su extraccion");
+    monto = prompt(
+      `Ingrese el monto de su ${tipo == "retiro" ? "extraccion" : ""}${
+        tipo == "ingreso" ? "ingreso" : ""
+      }`
+    );
     if (saldo < 0 || monto < 0) {
       //ERROR: monto negativo
       alert(
@@ -55,11 +59,12 @@ function realizarOperacion(saldo, monto, operacion = "retiro") {
     if (saldo + monto < 1000000) {
       saldo = saldo + monto;
       alert(
-        `Extraccion exitosa!\nUsted acaba de ingresar $${monto} de su cuenta\nLe quedan $${saldo} disponibles para seguir operando`
+        `Ingreso exitoso!\nUsted acaba de ingresar $${monto} de su cuenta\nLe quedan $${saldo} disponibles para seguir operando`
       );
-    } if (saldo + monto < 1000000){
-       alert(
-        `Extraccion incompleta\nUsted no puede ingresar $${monto} porque el total del balance supera el limite de su cuenta`
+    }
+    if (saldo + monto > 1000000) {
+      alert(
+        `Ingreso incompleto\nUsted no puede ingresar $${monto} porque el total del balance supera el limite de su cuenta`
       );
     }
   }
@@ -101,7 +106,7 @@ function menuOpciones(nombreUsuario, seleccion, tipoMenu = "principal") {
   return seleccion;
 }
 
-function atmApp(saldo, nombreUsuario, retiro = undefined) {
+function atmApp(saldo, nombreUsuario, retiro = undefined, ingreso = undefined) {
   //Proceso
   let seleccion;
   let salir = false;
@@ -110,8 +115,8 @@ function atmApp(saldo, nombreUsuario, retiro = undefined) {
     if (seleccion == 1) {
       // Retiro de efectivo
       retiro = validarOperacion(nombreUsuario, retiro); //validacion de datos
-      saldo = realizarOperacion(saldo, retiro, operacion="retiro"); //Salida
-      retiro = undefined; // Reseteo de variable asociada
+      saldo = realizarOperacion(saldo, retiro, (operacion = "retiro")); //Salida
+
       seleccion = undefined; // Reseteo de variable asociada
       seleccion = menuOpciones(nombreUsuario, seleccion, "salir"); // Salir de la app?
       if (seleccion == 2) {
@@ -119,7 +124,14 @@ function atmApp(saldo, nombreUsuario, retiro = undefined) {
       }
       seleccion = undefined; // Reseteo de variable asociada
     } else if (seleccion == 2) {
-      alert("seleccion 2");
+      // Ingreso de efectivo
+      ingreso = validarOperacion(nombreUsuario, retiro); //validacion de datos
+      saldo = realizarOperacion(saldo, ingreso, (operacion = "ingreso")); //Salida
+      seleccion = undefined; // Reseteo de variable asociada
+      seleccion = menuOpciones(nombreUsuario, seleccion, "salir"); // Salir de la app?
+      if (seleccion == 2) {
+        salir = true;
+      }
     } else if (seleccion == 3) {
       alert("seleccion 3");
     } else if (seleccion == 4) {
@@ -127,6 +139,8 @@ function atmApp(saldo, nombreUsuario, retiro = undefined) {
     } else if (seleccion == 5) {
       alert("seleccion 5");
     }
+    retiro = undefined; // Reseteo de variable asociada
+    ingreso = undefined; // Reseteo de variable asociada
   }
 }
 //Entrada
