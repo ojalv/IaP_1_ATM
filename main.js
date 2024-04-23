@@ -7,10 +7,15 @@ function validarRetiro(retiro) {
       alert(
         `Hola ${nombreUsuario}!\nParece que estas intentando extraer un monto negativo\nEsto no es posible, por favor ingresa un monto valido.`
       );
-    } else if (isNaN(saldo) || isNaN(retiro) || retiro == "") {
+    } else if (isNaN(saldo) || isNaN(retiro)) {
       //ERROR: monto NaN
       alert(
         `Hola ${nombreUsuario}!\nParece que ingresaste un caracter por error\nEsto no es valido, por favor ingresa un monto valido.`
+      );
+    } else if (retiro == "") {
+      //ERROR: monto vacio
+      alert(
+        `Hola ${nombreUsuario}!\nParece que no ingresaste nada para retirar\nEsto no es valido, por favor ingresa un monto valido.`
       );
     } else if (retiro == 0) {
       //ERROR:monto de extraccion igual a 0
