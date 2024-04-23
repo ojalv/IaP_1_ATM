@@ -39,16 +39,29 @@ function validarOperacion(nombreUsuario, monto, tipo = "retiro") {
   return parseFloat(monto);
 }
 
-function hacerRetiro(saldo, retiro) {
-  if (saldo < retiro) {
-    alert(
-      `Extraccion incompleta\nUsted no posee saldo suficiente para realizar el retiro de $${retiro} de su cuenta\nUsted tiene $${saldo} disponibles en su cuenta`
-    );
-  } else if (saldo >= retiro) {
-    saldo = saldo - retiro;
-    alert(
-      `Extraccion exitosa!\nUsted acaba de retirar $${retiro} de su cuenta\nLe quedan $${saldo} disponibles para seguir operando`
-    );
+function realizarOperacion(saldo, monto, operacion = "retiro") {
+  if (operacion == "retiro") {
+    if (saldo < monto) {
+      alert(
+        `Extraccion incompleta\nUsted no posee saldo suficiente para realizar el retiro de $${monto} de su cuenta\nUsted tiene $${saldo} disponibles en su cuenta`
+      );
+    } else if (saldo >= monto) {
+      saldo = saldo - monto;
+      alert(
+        `Extraccion exitosa!\nUsted acaba de retirar $${monto} de su cuenta\nLe quedan $${saldo} disponibles para seguir operando`
+      );
+    }
+  } else if (operacion == "ingreso") {
+    if (saldo + monto < 1000000) {
+      saldo = saldo + monto;
+      alert(
+        `Extraccion exitosa!\nUsted acaba de ingresar $${monto} de su cuenta\nLe quedan $${saldo} disponibles para seguir operando`
+      );
+    } if (saldo + monto < 1000000){
+       alert(
+        `Extraccion incompleta\nUsted no puede ingresar $${monto} porque el total del balance supera el limite de su cuenta`
+      );
+    }
   }
   return saldo;
 }
@@ -97,7 +110,7 @@ function atmApp(saldo, nombreUsuario, retiro = undefined) {
     if (seleccion == 1) {
       // Retiro de efectivo
       retiro = validarOperacion(nombreUsuario, retiro); //validacion de datos
-      saldo = hacerRetiro(saldo, retiro); //Salida
+      saldo = realizarOperacion(saldo, retiro, operacion="retiro"); //Salida
       retiro = undefined; // Reseteo de variable asociada
       seleccion = undefined; // Reseteo de variable asociada
       seleccion = menuOpciones(nombreUsuario, seleccion, "salir"); // Salir de la app?
