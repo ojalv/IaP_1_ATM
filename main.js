@@ -41,50 +41,68 @@ function hacerRetiro(saldo, retiro) {
   return saldo;
 }
 
-function menuOpciones(nombreUsuario, seleccion) {
-  while (
-    seleccion == undefined ||
-    (seleccion != 1 &&
-      seleccion != 2 &&
-      seleccion != 3 &&
-      seleccion != 4 &&
-      seleccion != 5)
-  ) {
-    seleccion = parseFloat(
-      prompt(
-        `Hola ${nombreUsuario}! Bienvenido a Atm Fake App
-        1. hacer extraccion de dinero
-        2. hacer ingreso de dinero
-        3. ver balance de la cuenta
-        4. ver movimientos
-        5. salir`
-      )
-    );
+function menuOpciones(nombreUsuario, seleccion, tipoMenu = "principal") {
+  if (tipoMenu == "principal") {
+    while (
+      seleccion == undefined ||
+      (seleccion != 1 &&
+        seleccion != 2 &&
+        seleccion != 3 &&
+        seleccion != 4 &&
+        seleccion != 5)
+    ) {
+      seleccion = parseFloat(
+        prompt(
+          `Hola ${nombreUsuario}! Bienvenido a Atm Fake App
+            1. hacer extraccion de dinero
+            2. hacer ingreso de dinero
+            3. ver balance de la cuenta
+            4. ver movimientos
+            5. salir`
+        )
+      );
+    }
+  } else if (tipoMenu == "salir") {
+    while (seleccion == undefined || (seleccion != 1 && seleccion != 2)) {
+      seleccion = parseFloat(
+        prompt(
+          `${nombreUsuario}, deseas realizar otra operacion?
+        1. si
+        2. no`
+        )
+      );
+    }
   }
   return seleccion;
 }
 
 function atmApp(saldo, nombreUsuario, retiro) {
-  let seleccion;
   //Proceso
-
-  seleccion = menuOpciones(nombreUsuario, seleccion);
-  if (seleccion == 1) {
-    retiro = validarRetiro(nombreUsuario, retiro);
-    //Salida
-    saldo = hacerRetiro(saldo, retiro);
-    
-  } else if (seleccion == 2) {
-    alert("seleccion 2");
-  } else if (seleccion == 3) {
-    alert("seleccion 3");
-  } else if (seleccion == 4) {
-    alert("seleccion 4");
-  } else if (seleccion == 5) {
-    alert("seleccion 5");
+  let seleccion;
+  let salir = false;
+  while (salir == false) {
+    seleccion = menuOpciones(nombreUsuario, seleccion, "principal");
+    if (seleccion == 1) {
+      retiro = validarRetiro(nombreUsuario, retiro);
+      saldo = hacerRetiro(saldo, retiro); //Salida
+      retiro = undefined;
+      seleccion = undefined;
+      seleccion = menuOpciones(nombreUsuario, seleccion, "salir");
+      if (seleccion == 2) {
+        salir = true;
+      }
+      seleccion = undefined;
+    } else if (seleccion == 2) {
+      alert("seleccion 2");
+    } else if (seleccion == 3) {
+      alert("seleccion 3");
+    } else if (seleccion == 4) {
+      alert("seleccion 4");
+    } else if (seleccion == 5) {
+      alert("seleccion 5");
+    }
   }
 }
-
 //Entrada
 let saldo = 500;
 let nombreUsuario = "Pepe";
