@@ -2,17 +2,14 @@ function validarOperacion(nombreUsuario, monto, tipo = "retiro") {
   //Esta funcion valida que el dato ingresado sea un numero positivo, en caso contrario le informa al usuario el tipo de error
   while (monto == undefined || monto <= 0 || isNaN(monto) || monto == "") {
     monto = prompt(
-      `Ingrese el monto que desee ${tipo == "retiro" ? "extraer" : ""}${
-        tipo == "ingreso" ? "agregar" : ""
+      `Ingrese el monto que desee ${tipo == "retiro" ? "extraer" : ""}${tipo == "ingreso" ? "agregar" : ""
       } a su cuenta`
     );
     if (saldo < 0 || monto < 0) {
       //ERROR: monto negativo
       alert(
-        `Hola ${nombreUsuario}!\nParece que estas intentando ${
-          tipo == "retiro" ? "extraer" : ""
-        }${
-          tipo == "ingreso" ? "ingresar" : ""
+        `Hola ${nombreUsuario}!\nParece que estas intentando ${tipo == "retiro" ? "extraer" : ""
+        }${tipo == "ingreso" ? "ingresar" : ""
         } un monto negativo\nEsto no es posible, por favor ingresa un monto valido.`
       );
     } else if (isNaN(saldo) || isNaN(monto)) {
@@ -23,19 +20,15 @@ function validarOperacion(nombreUsuario, monto, tipo = "retiro") {
     } else if (monto == "") {
       //ERROR: monto vacio
       alert(
-        `Hola ${nombreUsuario}!\nParece que no ingresaste nada para ${
-          tipo == "retiro" ? "extraer" : ""
-        }${
-          tipo == "ingreso" ? "ingresar" : ""
+        `Hola ${nombreUsuario}!\nParece que no ingresaste nada para ${tipo == "retiro" ? "extraer" : ""
+        }${tipo == "ingreso" ? "ingresar" : ""
         }\nEsto no es valido, por favor ingresa un monto valido.`
       );
     } else if (monto == 0) {
       //ERROR:monto de extraccion igual a 0
       alert(
-        `Hola ${nombreUsuario}!\nParece que estas intentando ${
-          tipo == "retiro" ? "extraer" : ""
-        }${
-          tipo == "ingreso" ? "ingresar" : ""
+        `Hola ${nombreUsuario}!\nParece que estas intentando ${tipo == "retiro" ? "extraer" : ""
+        }${tipo == "ingreso" ? "ingresar" : ""
         } $0\nEsto no es posible, por favor ingresa un monto mayor a cero.`
       );
     }
@@ -140,6 +133,7 @@ function atmApp(saldo, nombreUsuario, retiro = undefined, ingreso = undefined) {
       seleccion = undefined;
     } else if (seleccion == 4) {
       alert("Historial de operaciones");
+      seleccion = undefined
     } else if (seleccion == 5) {
       salir = true;
     }
