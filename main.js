@@ -72,37 +72,40 @@ function operacionValida(saldo, monto, limite = 100000, operacion = "retiro") {
   }
 }
 
-function menuOpciones(nombreUsuario, seleccion, tipoMenu = "principal") {
-  if (tipoMenu == "principal") {
-    while (
-      seleccion == undefined ||
-      (seleccion != 1 &&
-        seleccion != 2 &&
-        seleccion != 3 &&
-        seleccion != 4 &&
-        seleccion != 5)
-    ) {
-      seleccion = parseFloat(
-        prompt(
-          `Hola ${nombreUsuario}! Bienvenido a Atm Fake App
-            1. hacer extraccion de dinero
-            2. hacer ingreso de dinero
-            3. ver balance de la cuenta
-            4. ver movimientos
-            5. salir`
-        )
+function menuOpciones(nombreUsuario, seleccion, tipo = "principal") {
+  switch (tipo) {
+    case "principal":
+      do {
+        seleccion = parseFloat(
+          prompt(
+            `Hola ${nombreUsuario}! Bienvenido a Atm Fake App
+              1. hacer extraccion de dinero
+              2. hacer ingreso de dinero
+              3. ver balance de la cuenta
+              4. ver movimientos
+              5. salir`
+          )
+        );
+      } while (
+        seleccion == undefined ||
+        (seleccion != 1 &&
+          seleccion != 2 &&
+          seleccion != 3 &&
+          seleccion != 4 &&
+          seleccion != 5)
       );
-    }
-  } else if (tipoMenu == "salir") {
-    while (seleccion == undefined || (seleccion != 1 && seleccion != 2)) {
-      seleccion = parseFloat(
-        prompt(
-          `${nombreUsuario}, deseas realizar otra operacion?
-        1. si
-        2. no`
-        )
-      );
-    }
+      break;
+    case "salir":
+      do {
+        seleccion = parseFloat(
+          prompt(
+            `${nombreUsuario}, deseas realizar otra operacion?
+          1. si
+          2. no`
+          )
+        );
+      } while (seleccion == undefined || (seleccion != 1 && seleccion != 2));
+      break;
   }
   return seleccion;
 }
