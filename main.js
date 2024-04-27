@@ -49,33 +49,27 @@ function montoEntrada(nombreUsuario, monto, tipo = "retiro") {
   } while (monto == undefined || monto <= 0 || isNaN(monto) || monto == "");
   return parseFloat(monto);
 }
+function operacionValida(saldo, monto, limite = 100000, operacion = "retiro") {
+  switch (operacion) {
+    case "retiro": // retiro valido?
+      if (monto > saldo) {
+        return false;
+      } else if (monto <= saldo) {
+        return true;
+      }
+      break;
 
-function realizarOperacion(saldo, monto, operacion = "retiro") {
-  if (operacion == "retiro") {
-    if (saldo < monto) {
-      alert(
-        `Extraccion incompleta\nUsted no posee saldo suficiente para realizar el retiro de $${monto} de su cuenta\nUsted tiene $${saldo} disponibles en su cuenta`
-      );
-    } else if (saldo >= monto) {
-      saldo = saldo - monto;
-      alert(
-        `Extraccion exitosa!\nUsted acaba de retirar $${monto} de su cuenta\nLe quedan $${saldo} disponibles para seguir operando`
-      );
-    }
-  } else if (operacion == "ingreso") {
-    if (saldo + monto < 1000000) {
-      saldo = saldo + monto;
-      alert(
-        `Ingreso exitoso!\nUsted acaba de ingresar $${monto} a su cuenta\nLe quedan $${saldo} disponibles para seguir operando`
-      );
-    }
-    if (saldo + monto > 1000000) {
-      alert(
-        `Ingreso incompleto\nUsted no puede ingresar $${monto} porque el total del balance supera el limite de su cuenta`
-      );
-    }
+    case "ingreso": // ingreso valido
+      if (saldo + monto > limite) {
+        return false;
+      } else if (saldo + monto <= limite) {
+        return true;
+      }
+      break;
+
+    default:
+      break;
   }
-  return saldo;
 }
 
 function menuOpciones(nombreUsuario, seleccion, tipoMenu = "principal") {
@@ -124,7 +118,22 @@ function atmApp(saldo, nombreUsuario) {
     switch (seleccion) {
       case 1: // retiro de dinero
         monto = montoEntrada(nombreUsuario, monto);
-        saldo = realizarOperacion(saldo, monto, (operacion = "retiro"));
+        switch (operacionValida(saldo, monto, 100000, "retiro")) {
+          case true:
+            saldo = saldo - monto;
+            alert(
+              `Extraccion exitosa!\nUsted acaba de retirar $${monto} de su cuenta\nLe quedan $${saldo} disponibles para seguir operando`
+            );
+            break;
+
+          case false:
+            alert(
+              `Extraccion incompleta\nUsted no posee saldo suficiente para realizar el retiro de $${monto} de su cuenta\nUsted tiene $${saldo} disponibles en su cuenta`
+            );
+
+          default:
+            break;
+        }
 
         seleccion = undefined; // Reseteo de variable asociada
         seleccion = menuOpciones(nombreUsuario, seleccion, "salir"); // Salir de la app?
@@ -135,8 +144,24 @@ function atmApp(saldo, nombreUsuario) {
 
         break;
       case 2: // ingreso de dinero
-        ingreso = montoEntrada(nombreUsuario, monto, "ingreso"); //validacion de datos
-        saldo = realizarOperacion(saldo, monto, "ingreso"); //Salida
+        monto = montoEntrada(nombreUsuario, monto, "ingreso"); //validacion de datos
+        switch (operacionValida(saldo, monto, 100000, "ingreso")) {
+          case true:
+            saldo = saldo + monto;
+            alert(
+              `Ingreso exitoso!\nUsted acaba de ingresar $${monto} a su cuenta\nLe quedan $${saldo} disponibles para seguir operando`
+            );
+            break;
+
+          case false:
+            alert(
+              `Ingreso incompleto\nUsted no puede ingresar $${monto} porque el total del balance supera el limite de su cuenta`
+            );
+
+          default:
+            break;
+        }
+
         seleccion = undefined; // Reseteo de variable asociada
         seleccion = menuOpciones(nombreUsuario, seleccion, "salir"); // Salir de la app?
         if (seleccion == 2) {
