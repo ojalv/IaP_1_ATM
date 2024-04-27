@@ -2,14 +2,17 @@ function validarOperacion(nombreUsuario, monto, tipo = "retiro") {
   //Esta funcion valida que el dato ingresado sea un numero positivo, en caso contrario le informa al usuario el tipo de error
   while (monto == undefined || monto <= 0 || isNaN(monto) || monto == "") {
     monto = prompt(
-      `Ingrese el monto que desee ${tipo == "retiro" ? "extraer" : ""}${tipo == "ingreso" ? "agregar" : ""
+      `Ingrese el monto que desee ${tipo == "retiro" ? "extraer" : ""}${
+        tipo == "ingreso" ? "agregar" : ""
       } a su cuenta`
     );
     if (saldo < 0 || monto < 0) {
       //ERROR: monto negativo
       alert(
-        `Hola ${nombreUsuario}!\nParece que estas intentando ${tipo == "retiro" ? "extraer" : ""
-        }${tipo == "ingreso" ? "ingresar" : ""
+        `Hola ${nombreUsuario}!\nParece que estas intentando ${
+          tipo == "retiro" ? "extraer" : ""
+        }${
+          tipo == "ingreso" ? "ingresar" : ""
         } un monto negativo\nEsto no es posible, por favor ingresa un monto valido.`
       );
     } else if (isNaN(saldo) || isNaN(monto)) {
@@ -20,15 +23,19 @@ function validarOperacion(nombreUsuario, monto, tipo = "retiro") {
     } else if (monto == "") {
       //ERROR: monto vacio
       alert(
-        `Hola ${nombreUsuario}!\nParece que no ingresaste nada para ${tipo == "retiro" ? "extraer" : ""
-        }${tipo == "ingreso" ? "ingresar" : ""
+        `Hola ${nombreUsuario}!\nParece que no ingresaste nada para ${
+          tipo == "retiro" ? "extraer" : ""
+        }${
+          tipo == "ingreso" ? "ingresar" : ""
         }\nEsto no es valido, por favor ingresa un monto valido.`
       );
     } else if (monto == 0) {
       //ERROR:monto de extraccion igual a 0
       alert(
-        `Hola ${nombreUsuario}!\nParece que estas intentando ${tipo == "retiro" ? "extraer" : ""
-        }${tipo == "ingreso" ? "ingresar" : ""
+        `Hola ${nombreUsuario}!\nParece que estas intentando ${
+          tipo == "retiro" ? "extraer" : ""
+        }${
+          tipo == "ingreso" ? "ingresar" : ""
         } $0\nEsto no es posible, por favor ingresa un monto mayor a cero.`
       );
     }
@@ -103,43 +110,49 @@ function atmApp(saldo, nombreUsuario, retiro = undefined, ingreso = undefined) {
   //Proceso
   let seleccion;
   let salir = false;
-  while (salir == false) {
-    seleccion = menuOpciones(nombreUsuario, seleccion, "principal");
-    if (seleccion == 1) {
-      // hacer extraccion de dinero
-      retiro = validarOperacion(nombreUsuario, retiro); //validacion de datos
-      saldo = realizarOperacion(saldo, retiro, (operacion = "retiro")); //Salida
 
-      seleccion = undefined; // Reseteo de variable asociada
-      seleccion = menuOpciones(nombreUsuario, seleccion, "salir"); // Salir de la app?
-      if (seleccion == 2) {
+  do {
+    seleccion = menuOpciones(nombreUsuario, seleccion, "principal");
+    switch (seleccion) {
+      case 1: // retiro de dinero
+        retiro = validarOperacion(nombreUsuario, retiro); //validacion de datos
+        saldo = realizarOperacion(saldo, retiro, (operacion = "retiro")); //Salida
+
+        seleccion = undefined; // Reseteo de variable asociada
+        seleccion = menuOpciones(nombreUsuario, seleccion, "salir"); // Salir de la app?
+        if (seleccion == 2) {
+          salir = true;
+        }
+        seleccion = undefined; // Reseteo de variable asociada
+
+        break;
+      case 2: // ingreso de dinero
+        ingreso = validarOperacion(nombreUsuario, ingreso, "ingreso"); //validacion de datos
+        saldo = realizarOperacion(saldo, ingreso, "ingreso"); //Salida
+        seleccion = undefined; // Reseteo de variable asociada
+        seleccion = menuOpciones(nombreUsuario, seleccion, "salir"); // Salir de la app?
+        if (seleccion == 2) {
+          salir = true;
+        }
+        seleccion = undefined; // Reseteo de variable asociada
+        break;
+      case 3: // ver balance de la cuenta
+        alert(`Balance Cuenta ${nombreUsuario}: $${saldo}`);
+        seleccion = undefined;
+        break;
+
+      case 4: // ver historial de operaciones
+        alert("Historial de operaciones");
+        seleccion = undefined;
+        break;
+      case 5: // salir de la aplicacion
         salir = true;
-      }
-      seleccion = undefined; // Reseteo de variable asociada
-    } else if (seleccion == 2) {
-      // hacer ingreso de dinero
-      ingreso = validarOperacion(nombreUsuario, ingreso, "ingreso"); //validacion de datos
-      saldo = realizarOperacion(saldo, ingreso, "ingreso"); //Salida
-      seleccion = undefined; // Reseteo de variable asociada
-      seleccion = menuOpciones(nombreUsuario, seleccion, "salir"); // Salir de la app?
-      if (seleccion == 2) {
-        salir = true;
-      }
-      seleccion = undefined; // Reseteo de variable asociada
-    } else if (seleccion == 3) {
-      // ver balance de la cuenta
-      alert(`Balance
-      Cuenta ${nombreUsuario}: $${saldo}`);
-      seleccion = undefined;
-    } else if (seleccion == 4) {
-      alert("Historial de operaciones");
-      seleccion = undefined
-    } else if (seleccion == 5) {
-      salir = true;
+        break;
+
+      default:
+        break;
     }
-    retiro = undefined; // Reseteo de variable asociada
-    ingreso = undefined; // Reseteo de variable asociada
-  }
+  } while (salir == false);
 }
 //Entrada
 let saldo = 500;
