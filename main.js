@@ -71,7 +71,6 @@ function operacionValida(saldo, monto, limite = 100000, operacion = "retiro") {
       break;
   }
 }
-
 function menuOpciones(nombreUsuario, seleccion, tipo = "principal") {
   switch (tipo) {
     case "principal":
@@ -109,11 +108,21 @@ function menuOpciones(nombreUsuario, seleccion, tipo = "principal") {
   }
   return seleccion;
 }
-
+function historialConFormato(historial) {
+  let cadena = "No hay operaciones registradas aun";
+  if (historial.length > 0) {
+    cadena = "";
+    historial.forEach((operacion) => {
+      cadena += `${operacion}\n`;
+    });
+  }
+  return cadena;
+}
 function atmApp(saldo, nombreUsuario) {
   //Proceso
   let seleccion;
   let monto;
+  let historial = [];
   let salir = false;
 
   do {
@@ -124,6 +133,7 @@ function atmApp(saldo, nombreUsuario) {
         switch (operacionValida(saldo, monto, 100000, "retiro")) {
           case true:
             saldo = saldo - monto;
+            historial.push(`-$${monto} (Extraccion de ${nombreUsuario})`);
             alert(
               `Extraccion exitosa!\nUsted acaba de retirar $${monto} de su cuenta\nLe quedan $${saldo} disponibles para seguir operando`
             );
@@ -151,6 +161,7 @@ function atmApp(saldo, nombreUsuario) {
         switch (operacionValida(saldo, monto, 100000, "ingreso")) {
           case true:
             saldo = saldo + monto;
+            historial.push(`+$${monto} (Ingreso de ${nombreUsuario})`);
             alert(
               `Ingreso exitoso!\nUsted acaba de ingresar $${monto} a su cuenta\nLe quedan $${saldo} disponibles para seguir operando`
             );
@@ -176,16 +187,12 @@ function atmApp(saldo, nombreUsuario) {
         alert(`Balance Cuenta ${nombreUsuario}: $${saldo}`);
         seleccion = undefined;
         break;
-
       case 4: // ver historial de operaciones
-        alert("Historial de operaciones");
+        alert(`Historial de operaciones\n${historialConFormato(historial)}`);
         seleccion = undefined;
         break;
       case 5: // salir de la aplicacion
         salir = true;
-        break;
-
-      default:
         break;
     }
   } while (salir == false);
